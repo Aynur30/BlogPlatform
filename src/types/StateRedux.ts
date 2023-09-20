@@ -1,6 +1,5 @@
 import { IArticle } from "./Articles";
 import { IUser } from "./UsersStart";
-// 1
 
 export interface IStateArticle {
   articles: Array<IArticle>;

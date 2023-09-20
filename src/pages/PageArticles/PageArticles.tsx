@@ -18,7 +18,6 @@ const PageArticles = () => {
   );
   const token = useSelector((state: IStateUser) => state.user.user.token);
   const [currentPage, changeCurrentPage] = useState(1);
-  // const token = () => useSelector((state: IStateUser) => state.user.user.token);
   const reloadArticles = (page: number) => {
     changeCurrentPage(page);
     dispatch(fetchArticlesList({ page: page - 1, token }));
