@@ -6,7 +6,6 @@ import Header from "../components/Header";
 
 import PageSignUp from "./PageSignUp/PageSignUp";
 import PageSignIn from "./PageSignIn/SignInPage";
-// import PageHome from "./PageHome/Home";
 import PageArticles from "./PageArticles/PageArticles";
 import UnknownPage from "./unknownPage/unknownPage";
 import FullPage from "./FullPage/FullPage";
