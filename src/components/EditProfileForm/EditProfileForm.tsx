@@ -4,22 +4,18 @@ import { useSelector, useDispatch } from "react-redux";
 import cn from "classnames";
 
 import { IEditProfile } from "../../types/FormTypes";
-import { IStateUser } from "../../types/StateRedux";
 import { fetchEditProfile } from "../../services/usersAuthentication";
-import avatar from "../../img/images.jpg";
+import avatar from "../../assets/img/images.jpg";
 import { editprofile } from "../../store/slices/userParametres";
+import { selectToken, selectEmail, selectUsername } from "../../store/selector";
 
 import "./EditProfileForm.scss";
 
 const EditProfileForm = () => {
   const dispatch = useDispatch();
-  const DefaultUserName = useSelector(
-    (state: IStateUser) => state.user.user.username
-  );
-  const token = useSelector((state: IStateUser) => state.user.user.token);
-  const DefaultEmail = useSelector(
-    (state: IStateUser) => state.user.user.email
-  );
+  const DefaultUserName = useSelector(selectUsername);
+  const token = useSelector(selectToken);
+  const DefaultEmail = useSelector(selectEmail);
   const {
     register,
     formState: { errors },

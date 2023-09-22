@@ -4,11 +4,10 @@ import "./ArticlesList.scss";
 
 import { IStateArticles } from "../../types/StateRedux";
 import Article from "../Article";
+import { selectArticles } from "../../store/selector";
 
 const ArticlesList = () => {
-  const arrayArticles = useSelector(
-    (state: IStateArticles) => state.articles.articles
-  );
+  const arrayArticles = useSelector(selectArticles);
   const articles = arrayArticles.map((elem) => {
     return (
       <React.Fragment key={`${elem.slug} ${elem.author.username}`}>

@@ -2,14 +2,14 @@ import React from "react";
 import { Link, Outlet } from "react-router-dom";
 import { useSelector } from "react-redux";
 
-import { IStateUser } from "../../types/StateRedux";
+import { selectUsername } from "../../store/selector";
 
 import classes from "./Header.module.scss";
 import HeaderIn from "./HeaderOnline/HeaderOnline";
 import HeaderOnline from "./HeaderWithoutAuth/HeaderSign";
 
 const Header = () => {
-  const isAuth = useSelector((state: IStateUser) => state.user.user.username);
+  const isAuth = useSelector(selectUsername);
   const Auth = isAuth === "" ? HeaderOnline : HeaderIn;
 
   return (

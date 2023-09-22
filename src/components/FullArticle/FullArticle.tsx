@@ -10,15 +10,13 @@ import ModalWindow from "../ModalWinow";
 import { fetchAddLike, fetchDeleteLike } from "../../services/favorites";
 import { fetchArticlesSlug } from "../../services/Articles";
 import { IArticle } from "../../types/Articles";
-import { IStateUser } from "../../types/StateRedux";
+import { selectUsername, selectToken } from "../../store/selector";
 
 import "./FullArticle.scss";
 
 const FullArticle = () => {
-  const AuthorName = useSelector(
-    (state: IStateUser) => state.user.user.username
-  );
-  const token = useSelector((state: IStateUser) => state.user.user.token);
+  const AuthorName = useSelector(selectUsername);
+  const token = useSelector(selectToken);
   const [arr, setArr] = useState<IArticle>({
     slug: "",
     title: "",

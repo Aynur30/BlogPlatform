@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react"; // Import useState
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import cn from "classnames";
@@ -16,11 +16,14 @@ const SignInForm = () => {
   const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
 
+  const [flag, setFlag] = useState(false);
+
   const {
     register,
     formState: { errors },
     handleSubmit,
   } = useForm<ISignIn>({ mode: "onSubmit" });
+
   const onSubmit = handleSubmit(async (data) => {
     const user = {
       user: {
@@ -28,12 +31,13 @@ const SignInForm = () => {
         password: data.password,
       },
     };
-    const resp = await (await fetchExistingUser(user)).json();
-    if (resp.errors) {
-      alert("Email or password is invalid");
-    } else {
-      dispatch(fetchGetUserInfo(resp.user.token));
+    const response = await fetchExistingUser(user);
+    if (response.status === 200) {
+      const userResponse = await response.json();
+      dispatch(fetchGetUserInfo(userResponse.user.token));
       navigate(`/articles`);
+    } else {
+      setFlag(true);
     }
   });
   return (
@@ -49,16 +53,13 @@ const SignInForm = () => {
             {...register("email", {
               required: "Поле обязательно к заполнению",
               pattern: {
-                // eslint-disable-next-line no-useless-escape
-                value: /^[\w-\.]+@[\w-]+\.[rucom]{2,3}$/i,
+                value: /^[\w-.]+@[\w-]+\.[rucom]{2,3}$/i,
                 message: "invalid email address",
               },
             })}
           />
         </label>
-        <div>
-          {<p>{errors?.email?.message}</p> || <p>{"Error in text email!"}</p>}
-        </div>
+        <div>{errors?.email?.message || "Error in text email!"}</div>
         <label style={{ marginBottom: "21px" }}>
           Password
           <input
@@ -78,14 +79,17 @@ const SignInForm = () => {
             })}
           />
         </label>
-        <input type="submit" className="sign-in-submit" value={`Login`}></input>
+        <div className="error" style={{ textAlign: "center" }}>
+          {flag ? (
+            <p style={{ margin: "0 auto" }}>Wrong password or email</p>
+          ) : null}
+        </div>
+        <input type="submit" className="sign-in-submit" value={`Login`} />
       </form>
-
       <div className="sign-up-refuse">
-        Don`t have an account? <Link to="/sign-up"> Sign Up.</Link>
+        Dont have an account? <Link to="/sign-up"> Sign Up.</Link>
       </div>
     </div>
   );
 };
-
 export default SignInForm;

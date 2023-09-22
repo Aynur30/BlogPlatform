@@ -24,7 +24,6 @@ export const articlesList = createSlice({
         state.loading = false;
       })
       .addCase(fetchArticlesList.rejected, (state) => {
-        console.log(state.articles, "ошибка");
         state.loading = false;
       });
   },

@@ -1,15 +1,14 @@
 import React, { useState } from "react";
 import "./CreateArticleForm.scss";
-// import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useSelector } from "react-redux";
 import cn from "classnames";
 import { useLocation, useParams, useNavigate } from "react-router-dom";
 import { v4 } from "uuid";
 
-import { IStateUser } from "../../types/StateRedux";
 import { ICreateArticle } from "../../types/FormTypes";
 import { fetchPostNewArticle, fetchEditArticle } from "../../services/Articles";
+import { selectToken } from "../../store/selector";
 
 interface ILocation {
   title: string;
@@ -22,7 +21,6 @@ const CreateArticleForm = () => {
   const { slug } = useParams();
   const location = useLocation();
   const stateLoc = location.state as ILocation;
-  // console.log(stateLoc.title);
   const NamePage =
     location.state === null
       ? "Create New Article"
@@ -37,7 +35,7 @@ const CreateArticleForm = () => {
     reset,
   } = useForm<ICreateArticle>({ mode: "onSubmit" });
 
-  const token = useSelector((state: IStateUser) => state.user.user.token);
+  const token = useSelector(selectToken);
 
   const [firstTag, changeFirstTag] = useState("");
   const [manyTags, changeTags] = useState<Array<{ value: string; id: string }>>(
@@ -96,7 +94,6 @@ const CreateArticleForm = () => {
       <div className="new-article__container">
         <h2>{NamePage}</h2>
         <form onSubmit={onSubmit}>
-          {/* title */}
           <label>Title</label>
           <br></br>
           <input
@@ -225,7 +222,6 @@ const CreateArticleForm = () => {
               ))}
             </>
           )}
-          {/* button submit */}
           <button className="new-article__submit">Send</button>
         </form>
       </div>

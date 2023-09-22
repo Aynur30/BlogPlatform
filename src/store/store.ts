@@ -27,7 +27,7 @@ const rootReducer = combineReducers({
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
-/* eslint-disable no-underscore-dangle */
+
 export const store = configureStore({
   reducer: persistedReducer,
   middleware: (getDefaultMiddleware) =>

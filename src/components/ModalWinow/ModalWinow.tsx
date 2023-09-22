@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 import { fetchDeleteArticle } from "../../services/Articles";
-import { IStateUser } from "../../types/StateRedux";
+import { selectToken } from "../../store/selector";
 
 import style from "./ModalWinow.module.scss";
 
@@ -12,7 +12,7 @@ const ModalWinow = (props: {
   changeState: (num: boolean) => void;
   slug: string | undefined;
 }) => {
-  const token = useSelector((state: IStateUser) => state.user.user.token);
+  const token = useSelector(selectToken);
   const newSlug = props.slug === undefined ? "" : props.slug;
   const navigate = useNavigate();
 
