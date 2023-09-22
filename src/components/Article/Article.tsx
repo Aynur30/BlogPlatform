@@ -9,6 +9,7 @@ import cn from "classnames";
 import { fetchAddLike, fetchDeleteLike } from "../../services/favorites";
 import { IStateUser } from "../../types/StateRedux";
 import { IArticle } from "../../types/Articles";
+import { selectToken } from "../../store/selector";
 
 const Article = (props: { article: IArticle }) => {
   const {
@@ -33,7 +34,7 @@ const Article = (props: { article: IArticle }) => {
           ))
           .slice(0, 6)
       : null;
-  const token = useSelector((state: IStateUser) => state.user.user.token);
+  const token = useSelector(selectToken);
   return (
     <div className="article">
       <div className="article-header">
