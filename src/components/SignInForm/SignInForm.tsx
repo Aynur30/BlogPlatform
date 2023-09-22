@@ -59,7 +59,9 @@ const SignInForm = () => {
             })}
           />
         </label>
-        <div>{errors?.email?.message || "Error in text email!"}</div>
+        <div>
+          {errors.email && <p className="error">{errors.email.message}</p>}
+        </div>
         <label style={{ marginBottom: "21px" }}>
           Password
           <input
