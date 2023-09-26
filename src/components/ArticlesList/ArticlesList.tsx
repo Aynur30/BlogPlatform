@@ -2,7 +2,6 @@ import React from "react";
 import { useSelector } from "react-redux";
 import "./ArticlesList.scss";
 
-import { IStateArticles } from "../../types/StateRedux";
 import Article from "../Article";
 import { selectArticles } from "../../store/selector";
 

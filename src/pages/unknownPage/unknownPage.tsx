@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-const unknownPage = () => {
+const UnknownPage = () => {
   return (
     <React.Fragment>
       <h2 style={{ textAlign: "center" }}>Такой страницы не существует</h2>
@@ -12,4 +12,4 @@ const unknownPage = () => {
   );
 };
 
-export default unknownPage;
+export default UnknownPage;

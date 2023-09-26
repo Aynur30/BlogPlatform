@@ -1,17 +1,16 @@
 import React, { useState } from "react";
 import { HeartFilled, HeartOutlined } from "@ant-design/icons";
 import dateFormat from "dateformat";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import "./article.scss";
 import { useSelector } from "react-redux";
 import cn from "classnames";
 
 import { fetchAddLike, fetchDeleteLike } from "../../services/favorites";
-import { IStateUser } from "../../types/StateRedux";
 import { IArticle } from "../../types/Articles";
 import { selectToken } from "../../store/selector";
 
-const Article = (props: { article: IArticle }) => {
+const Article = ({ article }: { article: IArticle }) => {
   const {
     title,
     favoritesCount,
@@ -21,28 +20,29 @@ const Article = (props: { article: IArticle }) => {
     updatedAt,
     slug,
     favorited,
-  } = props.article;
-  const [stateFavor, chengeStateFavor] = useState(favorited);
+  } = article;
+
+  const [stateFavor, changeStateFavor] = useState(favorited);
   const [likes, changeLikes] = useState(favoritesCount);
-  const tags =
-    tagList.length === 0
-      ? tagList
-          .map((elem) => (
-            <React.Fragment key={`${author.username} ${Math.random()}`}>
-              <span className="article-tag">{elem.slice(0, 20)}</span>
-            </React.Fragment>
-          ))
-          .slice(0, 6)
-      : null;
+
+  const tags = tagList
+    .map((elem) => (
+      <span className="article-tag" key={elem}>
+        {elem.slice(0, 20)}
+      </span>
+    ))
+    .slice(0, 6);
+
   const token = useSelector(selectToken);
+  useParams();
+
   return (
     <div className="article">
       <div className="article-header">
         <div>
           <div className="article-top">
-            <Link to={`/articles/${slug}`} state={{ item: props.article }}>
-              <span className="article-title">{title.slice(0, 40)}</span>
-            </Link>
+            <Link to={`/articles/${slug}`} state={{ item: article }} />
+            <span className="article-title">{title.slice(0, 40)}</span>
             <span
               onClick={() => {
                 if (token !== "") {
@@ -53,7 +53,7 @@ const Article = (props: { article: IArticle }) => {
                     fetchDeleteLike(slug, token);
                     changeLikes(likes - 1);
                   }
-                  chengeStateFavor(!stateFavor);
+                  changeStateFavor(!stateFavor);
                 }
               }}
               className={cn({
@@ -63,7 +63,6 @@ const Article = (props: { article: IArticle }) => {
             >
               {stateFavor ? <HeartFilled /> : <HeartOutlined />}
             </span>
-
             <span className="article-favorite">{likes}</span>
           </div>
           <div>{tags}</div>
@@ -79,7 +78,7 @@ const Article = (props: { article: IArticle }) => {
               </span>
             </div>
             <div className="article-profile__icon">
-              <img src={author.image} />
+              <img src={author.image} alt={author.username} />{" "}
             </div>
           </div>
         </div>
