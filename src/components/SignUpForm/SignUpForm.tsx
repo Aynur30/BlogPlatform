@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import cn from "classnames";
@@ -11,6 +11,8 @@ import { message } from "./errorMessage";
 
 const SignUpForm = () => {
   const navigate = useNavigate();
+  const [flag, setFlag] = useState(false);
+  const [text, setText] = useState("");
   const {
     register,
     formState: { errors },
@@ -27,8 +29,10 @@ const SignUpForm = () => {
     };
     const res = await (await fetchregisterUser(user)).json();
     if (res.errors) {
-      alert(message(res));
+      setFlag(true);
+      setText(message(res));
     } else {
+      setFlag(false);
       navigate("/articles");
     }
   });
@@ -140,7 +144,7 @@ const SignUpForm = () => {
           <label>I agree to the processing of my personal information</label>
         </div>
         <div>{errors?.checkForm && <p>{errors?.checkForm.message}</p>}</div>
-
+        <div>{flag && <p className="error">{text}</p>}</div>
         <input
           type="submit"
           className="sign-up-submit"
