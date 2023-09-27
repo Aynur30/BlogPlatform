@@ -30,6 +30,7 @@ const App = () => {
           <Route path="/" element={<Navigate to="/articles" />}></Route>
           <Route path="*" element={<UnknownPage />}></Route>
         </Route>
+        <Route path="*" element={<UnknownPage />}></Route>
       </Routes>
     </div>
   );

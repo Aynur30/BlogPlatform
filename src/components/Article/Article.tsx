@@ -83,7 +83,7 @@ const Article = ({ article }: { article: IArticle }) => {
           </div>
         </div>
       </div>
-      <div className="article-description">{description.slice(0, 200)}</div>
+      <div className="article-description">{description.slice(0, 20)}</div>
     </div>
   );
 };
